@@ -1,2 +1,105 @@
-Hello World
-cambio en la pagina 12
+<html>
+<head>
+<title>DataOps</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <h1 align="center">DataOps - Por David Rivera</h1>
+    </br>
+    <h2 align="center">Modelo Prediccion Precio Arroz Colombia</h2>
+</br>
+
+<div class="container">
+        <div align="center" class="table-responsive">
+         <h4>Serie de tiempo e histograma</h4>
+        </br>
+        <div>
+<img src="TSoriginal.png">
+</br>
+</div>
+</div>
+</div>
+
+
+<div class="container">
+        <div align="center" class="table-responsive">
+         <h4>Descomposicion de la serie de tiempo</h4>
+        </br>
+        <div>
+<img src="decomposition.png">
+</br>
+</div>
+</div>
+</div>
+
+
+<div class="container">
+        <div align="center" class="table-responsive">
+         <h4>Prediccion</h4>
+        </br>
+        <div>
+<img src="Price.png">
+</br>
+</div>
+</div>
+</div>
+
+</br>
+</br>
+</br>
+</br>
+
+<div class="container">
+        <div align="center" class="table-responsive">
+         <h4>Tabla de valores</h4>
+         <br />
+         <div align="center">
+          <button type="button" name="load_data" id="load_data" class="btn btn-info">Mostrar valores</button>
+         </div>
+         <br />
+         <div id="price_rice_table">
+         </div>
+        </div>
+       </div>
+</body>
+</html>
+
+
+<script>
+        $(document).ready(function(){
+         $('#load_data').click(function(){
+          $.ajax({
+           url:"price_rice.csv",
+           dataType:"text",
+           success:function(data)
+           {
+            var price_rice_data = data.split(/\r?\n|\r/);
+            var table_data = '<table class="table table-bordered table-striped">';
+            for(var count = 0; count<price_rice_data.length; count++)
+            {
+             var cell_data = price_rice_data[count].split(",");
+             table_data += '<tr>';
+             for(var cell_count=0; cell_count<cell_data.length; cell_count++)
+             {
+              if(count === 0)
+              {
+               table_data += '<th>'+cell_data[cell_count]+'</th>';
+              }
+              else
+              {
+               table_data += '<td>'+cell_data[cell_count]+'</td>';
+              }
+             }
+             table_data += '</tr>';
+            }
+            table_data += '</table>';
+            $('#price_rice_table').html(table_data);
+           }
+          });
+         });
+         
+        });
+        </script>
